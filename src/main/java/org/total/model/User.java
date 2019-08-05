@@ -1,10 +1,6 @@
 package org.total.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,6 +15,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class User implements Serializable {
@@ -32,23 +29,4 @@ public class User implements Serializable {
     private int age;
 
     private Address address;
-
-    public User(String id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
-
-    public User(String id, String name, int age, Address address) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.address = address;
-    }
-
-    public User(String name, int age, Address address) {
-        this.name = name;
-        this.age = age;
-        this.address = address;
-    }
 }

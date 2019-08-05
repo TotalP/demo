@@ -10,11 +10,13 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> fetchAllUsers();
+    List<User> fetchAllUsers(final Integer pageNumber,
+                             final Integer pageSize,
+                             final String sortBy);
 
     User fetchUserByName(final String name);
 
     List<User> fetchUserByNameCaseInsensitive(final String name);
 
-    void saveUser(final User user);
+    User saveUser(final User user);
 }
