@@ -9,5 +9,7 @@ import org.total.model.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
-    User findByName(String name);
+    User findByName(final String name);
+
+    Long deleteByName(final String name);
 }

@@ -3,6 +3,7 @@ package org.total.impl;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -59,6 +60,11 @@ public class BasicUserService implements UserService {
     }
 
     @Override
+    public User fetchUserById(final String id) {
+        return getUserRepository().findById(id).orElse(null);
+    }
+
+    @Override
     @Cacheable(cacheNames = "userCache", unless = "#result == null", key = "#name")
     public User fetchUserByName(final String name) {
         log.info("BasicUserService#fetchUserByName() touched the database.");
@@ -77,8 +83,14 @@ public class BasicUserService implements UserService {
     }
 
     @Override
-    @CachePut(cacheNames = "userCache", unless = "#result == null", key = "#user.name")
+    @CachePut(cacheNames = "userCache", unless = "#result == null", key = "#user.getName()")
     public User saveUser(final User user) {
         return getUserRepository().save(user);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "userCache", key = "#name")
+    public Long deleteUserByName(final String name) {
+        return getUserRepository().deleteByName(name);
     }
 }

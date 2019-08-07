@@ -7,7 +7,8 @@ package org.total.util;
 public class Constants {
 
     private Constants() {
+        throw new IllegalStateException("org.total.util.Constants can not be instantiated.");
     }
 
-    public static final String USER_WITH_NAME = "User with name '";
+    public static final String USER_DOES_NOT_EXIST = "User does not exist.";
 }
