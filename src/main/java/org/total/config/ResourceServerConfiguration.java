@@ -24,9 +24,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .csrf().disable()
                 .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/api/**").authenticated()
-                .antMatchers(HttpMethod.GET, "/api/**").access("hasRole ('USER') or hasRole('ADMIN')")
-                .antMatchers(HttpMethod.POST, "/api/**").access("hasRole ('USER') or hasRole('ADMIN')")
+                .antMatchers("/api/users").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/users").access("hasRole ('USER') or hasRole('ADMIN')")
+                .antMatchers(HttpMethod.POST, "/api/users").access("hasRole('ADMIN')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }

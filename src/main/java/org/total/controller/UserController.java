@@ -34,7 +34,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "/")
+    @GetMapping
     public ResponseEntity<List<User>> getAllUsers(@RequestParam(defaultValue = "0") Integer pageNumber,
                                                   @RequestParam(defaultValue = "10") Integer pageSize,
                                                   @RequestParam(defaultValue = "name") String sortBy) {
