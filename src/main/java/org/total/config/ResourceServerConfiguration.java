@@ -18,12 +18,18 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(final HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().antMatchers("/oauth/token").permitAll();
-
-        httpSecurity.csrf().disable().anonymous().disable().authorizeRequests().antMatchers("/api/users/**").authenticated()
-                .antMatchers(HttpMethod.GET, "/api/users/**").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.POST, "/api/users/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers(HttpMethod.DELETE, "/api/users/**").access("hasRole('ROLE_ADMIN')").and().exceptionHandling()
-                .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+        httpSecurity
+                .authorizeRequests()
+                .antMatchers("/oauth/token").permitAll()
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/api/users/**").access("#oauth2.hasScope('read')")
+                .antMatchers(HttpMethod.POST, "/api/users/**").access("#oauth2.hasScope('write')")
+                .antMatchers(HttpMethod.DELETE, "/api/users/**").access("#oauth2.hasScope('trust')")
+                .anyRequest().authenticated()
+                .and()
+                .csrf().disable()
+                .anonymous().disable()
+                .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }

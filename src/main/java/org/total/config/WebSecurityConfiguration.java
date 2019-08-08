@@ -31,15 +31,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public UserDetailsService userDetailsService() {
         final UserDetails user = User.builder().username("demo-user")
-                .password(getPasswordEncoder().encode("demo-user-pass")).roles("USER").build();
-        final UserDetails admin = User.builder().username("demo-admin")
-                .password(getPasswordEncoder().encode("demo-admin-pass")).roles("ADMIN").build();
+                .password(getPasswordEncoder().encode("demo-user-pass")).authorities("demo-authority").build();
 
-        return new InMemoryUserDetailsManager(user, admin);
+        return new InMemoryUserDetailsManager(user);
     }
 
-    @Override
     @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }

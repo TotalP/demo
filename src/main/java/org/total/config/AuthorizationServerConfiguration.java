@@ -28,21 +28,16 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private TokenStore tokenStore;
+    private TokenStore tokenStore = new InMemoryTokenStore();
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("demo-client")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                .authorities("ROLE_ADMIN")
-                .scopes("read", "write")
-                .authorities("ROLE_USER")
-                .scopes("read")
-                .accessTokenValiditySeconds(300)
-                .autoApprove(true)
-                .secret(passwordEncoder().encode("a123456"));
+                .secret(passwordEncoder().encode("a123456"))
+                .authorizedGrantTypes("password")
+                .scopes("read", "write", "trust")
+                .accessTokenValiditySeconds(300);
     }
 
     @Bean
@@ -53,10 +48,5 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.authenticationManager(getAuthenticationManager()).tokenStore(getTokenStore());
-    }
-
-    @Bean
-    public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
     }
 }
