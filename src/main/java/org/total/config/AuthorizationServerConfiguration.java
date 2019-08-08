@@ -34,13 +34,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("client")
+                .withClient("demo-client")
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "USER")
+                .authorities("ROLE_ADMIN")
                 .scopes("read", "write")
+                .authorities("ROLE_USER")
+                .scopes("read")
                 .accessTokenValiditySeconds(300)
                 .autoApprove(true)
-                .secret(passwordEncoder().encode("password"));
+                .secret(passwordEncoder().encode("a123456"));
     }
 
     @Bean

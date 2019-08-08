@@ -78,7 +78,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "/")
+    @PostMapping
     public ResponseEntity<User> createUser(final @Valid @RequestBody UserDTO userDTO) {
         log.info("UserController#createUser() called.");
 

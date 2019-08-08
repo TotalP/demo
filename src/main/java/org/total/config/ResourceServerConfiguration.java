@@ -20,13 +20,10 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests().antMatchers("/oauth/token").permitAll();
 
-        httpSecurity
-                .csrf().disable()
-                .anonymous().disable()
-                .authorizeRequests()
-                .antMatchers("/api/users").authenticated()
-                .antMatchers(HttpMethod.GET, "/api/users").access("hasRole ('USER') or hasRole('ADMIN')")
-                .antMatchers(HttpMethod.POST, "/api/users").access("hasRole('ADMIN')")
-                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+        httpSecurity.csrf().disable().anonymous().disable().authorizeRequests().antMatchers("/api/users/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/users/**").access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.POST, "/api/users/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers(HttpMethod.DELETE, "/api/users/**").access("hasRole('ROLE_ADMIN')").and().exceptionHandling()
+                .accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }
