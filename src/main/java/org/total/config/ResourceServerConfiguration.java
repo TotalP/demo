@@ -20,16 +20,14 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/oauth/token").permitAll()
+                .antMatchers("/oauth/token", "/index.html").permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/users/**").access("#oauth2.hasScope('read')")
                 .antMatchers(HttpMethod.POST, "/api/users/**").access("#oauth2.hasScope('write')")
                 .antMatchers(HttpMethod.DELETE, "/api/users/**").access("#oauth2.hasScope('trust')")
-                .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
-                .anonymous().disable()
                 .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }
