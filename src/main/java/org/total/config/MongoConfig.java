@@ -29,8 +29,8 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-        return new MongoClient(Collections.singletonList(new ServerAddress("172.22.194.36", 27017)),
-                MongoCredential.createScramSha1Credential("root", "admin", "Avid123".toCharArray()),
+        return new MongoClient(Collections.singletonList(new ServerAddress("localhost", 27017)),
+                MongoCredential.createScramSha1Credential("root", "admin", "mongodbpass".toCharArray()),
                 MongoClientOptions.builder().writeConcern(WriteConcern.JOURNALED).build());
     }
 
