@@ -27,3 +27,12 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+demo-example.log
+
+demo.iml
+
+/node/
+
+/src/main/demofrontend/build/
+/src/main/demofrontend/node_modules/
